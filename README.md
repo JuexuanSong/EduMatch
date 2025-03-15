@@ -16,19 +16,31 @@ Objective: The Student Skill Exchange App is a platform designed to connect stud
 5. Explore matches
 6. Initiate communication
 7. Learning (in-person lessons/online meeting)
-## Timeline (2025)
-### March
-- Design: UI/Logo/Color Scheme/Typography (Figma)
-- FrontEndDev: User Authentication & Management (Flutter)
-### April
-- FrontEndDev: Messaging & Notification (Flutter)
-### May
-- BackEndDev: Matching Algorithum (Python)
-### June
-- Design: Entity-Relatioinship Diagram (ERD)
-- BackEndDev: Database Management/Security (PostgreSql)
-### July
-- BackEndDev: Server Set-up
-- API Intergration (Connecting Frontend and Backend)
-### August
-- Testing & Deployment
+## Work Flow
+| **Task**                                     | **Languages/Tools Used**                                      |
+|----------------------------------------------|---------------------------------------------------------------|
+| **1. Planning & Design**                     | Figma, Sketch, Adobe XD (for mockups)                         |
+| **2. Setting up the Development Environment** | Flutter, Dart, Visual Studio Code, Android Studio             |
+| **3. Building App UI**                       | Flutter, Dart, Widget libraries, Flutter Material, Cupertino |
+| **4. Implementing App Logic & Features**     | Flutter, Dart, Firebase, REST APIs, State Management (Provider, Riverpod, Bloc) |
+| **5. Backend Development**                   | Node.js/Express, Django/Flask (for APIs), Firebase, MongoDB, PostgreSQL, MySQL |
+| **6. API Integration**                       | Flutter (HTTP package, Dio), REST APIs, GraphQL (optional)    |
+| **7. Database Setup & Integration**          | Firebase, SQLite, MongoDB, PostgreSQL, MySQL, REST APIs       |
+| **8. User Authentication**                   | Firebase Authentication, OAuth, JWT (JSON Web Tokens)         |
+| **9. Matching Algorithm Implementation**     | Dart (for logic), Firebase or custom backend (Node.js, Python) |
+| **10. Testing**                              | Flutter (Flutter test, Widget test, Unit test), Firebase Emulator, Postman (for API testing) |
+| **11. App Optimization**                     | Flutter, Dart, Firebase, Performance tools                    |
+| **12. Deployment**                           | Google Play Store, Apple App Store, Firebase, CI/CD tools (Codemagic, Bitrise, GitHub Actions) |
+| **13. Monitoring & Analytics**               | Firebase Analytics, Google Analytics, Sentry (error monitoring) |
+## Project Timeline (2025)
+| Month  | Task                                      | Tools               | Status        |
+|--------|-------------------------------------------|---------------------|---------------|
+| **March**  | **Design**: UI/Logo/Color Scheme/Typography   | Figma               | In Progress   |
+| **March**  | **FrontEndDev**: User Authentication & Management  | Flutter             | Pending       |
+| **April**  | **FrontEndDev**: Messaging & Notifications    | Flutter             | Pending       |
+| **May**    | **BackEndDev**: Matching Algorithm           | Python              | Pending       |
+| **June**   | **Design**: Entity-Relationship Diagram (ERD) | Figma               | Pending       |
+| **June**   | **BackEndDev**: Database Management/Security | PostgreSQL          | Pending       |
+| **July**   | **BackEndDev**: Server Setup                | Cloud Provider (AWS, GCP, etc.) | Pending       |
+| **July**   | **API Integration**: Connect Frontend & Backend | RESTful API (Django/Flask) | Pending       |
+| **August** | **Testing & Deployment**                   | Flutter, Firebase   | Pending       |
