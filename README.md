@@ -32,6 +32,16 @@ Objective: The Student Skill Exchange App is a platform designed to connect stud
 | **11. App Optimization**                     | Flutter, Dart, Firebase, Performance tools                    |
 | **12. Deployment**                           | Google Play Store, Apple App Store, Firebase, CI/CD tools (Codemagic, Bitrise, GitHub Actions) |
 | **13. Monitoring & Analytics**               | Firebase Analytics, Google Analytics, Sentry (error monitoring) |
+## Color Scheme
+### Main Colors
+- Bright blue: #00a1df
+- Bright green: #6bab16
+- Dark navy: #00487b
+### Secondary Colors
+- Light beige: #fcf4d4
+- Dark grey blue: #5a8298
+- Light grey: #dcd4c4
+- Dark blue: #045a94
 ## Project Timeline (2025)
 | Month  | Task                                      | Tools               | Status        |
 |--------|-------------------------------------------|---------------------|---------------|
