@@ -16,4 +16,19 @@ Objective: The Student Skill Exchange App is a platform designed to connect stud
 5. Explore matches
 6. Initiate communication
 7. Learning (in-person lessons/online meeting)
-8. Process tracker
+## Timeline (2025)
+### March
+- Design: UI/Logo/Color Scheme/Typography (Figma)
+- FrontEndDev: User Authentication & Management (Flutter)
+### April
+- FrontEndDev: Messaging & Notification (Flutter)
+### May
+- BackEndDev: Matching Algorithum (Python)
+### June
+- Design: Entity-Relatioinship Diagram (ERD)
+- BackEndDev: Database Management/Security (PostgreSql)
+### July
+- BackEndDev: Server Set-up
+- API Intergration (Connecting Frontend and Backend)
+### August
+- Testing & Deployment
