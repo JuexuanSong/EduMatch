@@ -23,8 +23,8 @@ Objective: The Student Skill Exchange App is a platform designed to connect stud
 | **2. Setting up the Development Environment** | Flutter, Dart, Visual Studio Code, Android Studio             |
 | **3. Building App UI**                       | Flutter, Dart, Widget libraries, Flutter Material, Cupertino |
 | **4. Implementing App Logic & Features**     | Flutter, Dart, Firebase, REST APIs, State Management (Provider, Riverpod, Bloc) |
-| **5. Backend Development**                   | Node.js/Express, Django/Flask (for APIs), Firebase, MongoDB, PostgreSQL, MySQL |
-| **6. API Integration**                       | Flutter (HTTP package, Dio), REST APIs, GraphQL (optional)    |
+| **5. Backend Development**                   | Node.js/Express, Django/Flask (for APIs), Firebase, MongoDB, **PostgreSQL, MySQL |
+| **6. API Integration**                       | Flutter (HTTP package, Dio), **REST APIs, GraphQL (optional)    |
 | **7. Database Setup & Integration**          | Firebase, SQLite, MongoDB, PostgreSQL, MySQL, REST APIs       |
 | **8. User Authentication**                   | Firebase Authentication, OAuth, JWT (JSON Web Tokens)         |
 | **9. Matching Algorithm Implementation**     | Dart (for logic), Firebase or custom backend (Node.js, Python) |
