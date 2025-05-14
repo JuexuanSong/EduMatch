@@ -1,3 +1,21 @@
+<<<<<<< HEAD
+# edumatch
+
+A new Flutter project.
+
+## Getting Started
+
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
+=======
 # EduMatch
 ## Program statement: Student skill exchange app
 Objective: The Student Skill Exchange App is a platform designed to connect students who want to share and learn new skills from each other. By leveraging a matchmaking system similar to dating apps, the platform fosters peer-to-peer learning opportunities within academic communities.
@@ -54,3 +72,4 @@ Objective: The Student Skill Exchange App is a platform designed to connect stud
 | **July**   | **BackEndDev**: Server Setup                | Cloud Provider (AWS, GCP, etc.) | Pending       |
 | **July**   | **API Integration**: Connect Frontend & Backend | RESTful API (Django/Flask) | Pending       |
 | **August** | **Testing & Deployment**                   | Flutter, Firebase   | Pending       |
+>>>>>>> 2537517442dbbb32f8cf1dee2ecc331abae86f34
