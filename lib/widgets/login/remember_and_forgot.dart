@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// This widget provides a checkbox for "Remember me" functionality
 class RememberAndForgot extends StatefulWidget {
   const RememberAndForgot({super.key});
 
