@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// This widget displays a row of social login icons
 class SocialLoginRow extends StatelessWidget {
   const SocialLoginRow({super.key});
 
@@ -29,10 +30,10 @@ class SocialLoginRow extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _buildIcon(Icons.g_mobiledata),
-            _buildIcon(Icons.facebook),
-            _buildIcon(Icons.apple),
-            _buildIcon(Icons.smartphone),
+            _buildIcon(Icons.g_mobiledata), // Google icon
+            _buildIcon(Icons.facebook), // Facebook icon
+            _buildIcon(Icons.apple), // Apple icon
+            _buildIcon(Icons.smartphone), // Phone icon
           ],
         ),
       ],

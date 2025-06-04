@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../widgets/login_form.dart';
-import '../widgets/social_login_row.dart';
-import '../widgets/remember_and_forgot.dart';
-import '../widgets/signup_prompt.dart';
+import '../widgets/login/login_form.dart';
+import '../widgets/login/social_login_row.dart';
+import '../widgets/login/remember_and_forgot.dart';
+import '../widgets/login/signup_prompt.dart';
+import 'skills_selection_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -16,8 +17,8 @@ class LoginScreen extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFFF6E9D7),
-              Color(0xFFE9D9F5),
+              Color(0xFFF6E9D7), // Light Cream for top
+              Color(0xFFE9D9F5), // Light Purple for bottom
             ],
           ),
         ),
@@ -27,7 +28,7 @@ class LoginScreen extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(24.0),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.white, // White background for the card
                 borderRadius: BorderRadius.circular(20.0),
                 boxShadow: [
                   BoxShadow(
@@ -44,7 +45,10 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   const Text(
                     'Login',
-                    style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 26, 
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF00487B)), // Dark Navy for title
                   ),
                   const SizedBox(height: 8),
                   const Text(
@@ -61,13 +65,24 @@ class LoginScreen extends StatelessWidget {
                     height: 48,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF3B6EFF),
+                        backgroundColor: Color(0xFF00A1DF), // Bright Blue for button
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      onPressed: () {},
-                      child: const Text('Log In'),
+                      onPressed: () {
+                        // Navigate to the skills selection screen
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SkillsSelectionScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Log In',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20),
