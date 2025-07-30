@@ -28,6 +28,9 @@ class _HomeScreenState extends State<HomeScreen> {
           if (index == 2) {
             Navigator.pushNamed(context, '/chat'); // route to chat screen
             return; // prevent changing index
+          } else if (index == 1) {
+            Navigator.pushNamed(context, '/people'); // route to people screen
+            return; // prevent changing index
           }
           setState(() => _selectedIndex = index);
         },
