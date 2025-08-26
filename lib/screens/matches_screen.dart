@@ -4,7 +4,7 @@ import 'package:swipe_cards/swipe_cards.dart';
 import '../widgets/common/bottom_navigation_bar.dart';
 
 class MatchesScreen extends StatefulWidget {
-  const MatchesScreen({Key? key}) : super(key: key);
+  const MatchesScreen({super.key});
 
   @override
   State<MatchesScreen> createState() => _MatchesScreenState();
@@ -12,7 +12,6 @@ class MatchesScreen extends StatefulWidget {
 
 class _MatchesScreenState extends State<MatchesScreen> {
   late MatchEngine _matchEngine;
-  List<SwipeItem> _swipeItems = [];
   int _currentIndex = 1;
 
   final Map<String, String> skillDescriptions = {
@@ -47,19 +46,38 @@ class _MatchesScreenState extends State<MatchesScreen> {
     },
   ];
 
+  final List<SwipeItem> _swipeItems = [
+    SwipeItem(
+      content: {
+        'name': 'Alice',
+        'bio': 'Love biology and design!',
+        'image': 'assets/profilePics/profile1.jpg',
+        'canTeach': ['Photoshop', 'Biology', 'Flutter'],
+        'wannaLearn': ['Java', '3D Modeling', 'Math']
+      },
+      likeAction: () async => Future.value(),
+      nopeAction: () async => Future.value(),
+      superlikeAction: () async => Future.value(),
+      onSlideUpdate: (SlideRegion? region) async => null,
+    ),
+    SwipeItem(
+      content: {
+        'name': 'Bob',
+        'bio': 'Data nerd, code lover.',
+        'image': 'assets/profilePics/profile2.jpg',
+        'canTeach': ['Python', 'Excel', 'Data Analysis'],
+        'wannaLearn': ['UI/UX', 'React', 'Speaking']
+      },
+      likeAction: () async => Future.value(),
+      nopeAction: () async => Future.value(),
+      superlikeAction: () async => Future.value(),
+      onSlideUpdate: (SlideRegion? region) async => null,
+    ),
+  ];
+
   @override
   void initState() {
     super.initState();
-    for (var profile in profiles) {
-      _swipeItems.add(SwipeItem(
-        content: profile,
-        likeAction: () async => Future.value(),
-        nopeAction: () async => Future.value(),
-        superlikeAction: () async => Future.value(),
-        onSlideUpdate: (SlideRegion? region) async => null,
-      ));
-    }
-
     _matchEngine = MatchEngine(swipeItems: _swipeItems);
   }
 

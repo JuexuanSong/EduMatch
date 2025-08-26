@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'screens/login_screen.dart';
+import 'screens/signup_screen.dart';
 import 'screens/skills_selection_screen.dart';
 import 'screens/profile_setup_screen.dart';
-HEAD
 import 'screens/chat_screen.dart';
 import 'services/chat_service.dart';
 import 'screens/chat_detail_screen.dart';
 import 'models/user_match.dart';
 import 'screens/matches_screen.dart';
- 0c5755c (Add matching screen with swipe gesture and skill pop up)
+import 'screens/forgot_password_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,16 +39,16 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login', // Set the initial route to '/login'
       routes: {
         '/login': (context) => const LoginScreen(),
+        '/signup': (context) => const SignupScreen(),
+        '/forgot-password': (context) => const ForgotPasswordScreen(),
         '/skills_selection': (context) => const SkillsSelectionScreen(),
         '/profile_setup': (context) => const ProfileSetupScreen(),
-HEAD
         '/chat': (context) =>  ChatScreen(chatService: MockChatService()),
         '/chat_detail': (context) {
           final args = ModalRoute.of(context)!.settings.arguments as UserMatch;
           return ChatDetailScreen(user: args);
         },
         '/people': (context) => MatchesScreen(),
- 0c5755c (Add matching screen with swipe gesture and skill pop up)
       },
     );
   }

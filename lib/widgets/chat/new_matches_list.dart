@@ -1,7 +1,6 @@
 // lib/widgets/chat/new_matches_list.dart
 import 'package:flutter/material.dart';
 import '../../models/user_match.dart';
-import '../../screens/chat_detail_screen.dart';
 
 class NewMatchesList extends StatelessWidget {
   final List<UserMatch> matches;

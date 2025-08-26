@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import '../../models/chat_message.dart';
 import '../../models/user_match.dart';
-import '../../screens/chat_detail_screen.dart';
 
 class MessageList extends StatelessWidget {
   final List<ChatMessage> messages;

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "604150436675",
+    "project_id": "edumatch-cbb6f",
+    "storage_bucket": "edumatch-cbb6f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604150436675:android:561db721a9c60b25ee15f6",
+        "android_client_info": {
+          "package_name": "com.neuedumatch.edumatch"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeV9jWN6fM0Pf4A9tBQvGfCRYdTiRzBkU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
