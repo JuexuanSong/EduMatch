@@ -4,9 +4,8 @@ import 'screens/signup_screen.dart';
 import 'screens/skills_selection_screen.dart';
 import 'screens/profile_setup_screen.dart';
 import 'screens/chat_screen.dart';
-import 'services/chat_service.dart';
 import 'screens/chat_detail_screen.dart';
-import 'models/user_match.dart';
+import 'screens/home_screen.dart';
 import 'screens/matches_screen.dart';
 import 'screens/forgot_password_screen.dart';
 
