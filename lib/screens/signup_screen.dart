@@ -1,36 +1,32 @@
 import 'package:flutter/material.dart';
 import '../services/user_service.dart';
-import '../widgets/login/social_login_row.dart';
-import '../widgets/login/remember_and_forgot.dart';
-import '../widgets/login/signup_prompt.dart';
 import 'skills_selection_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   final UserService _userService = UserService();
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
   String? _errorMessage;
-  bool _rememberMe = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -39,8 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   String _getErrorMessage(String error) {
-    if (error.toLowerCase().contains('invalid') || error.toLowerCase().contains('credential')) {
-      return 'Invalid email or password';
+    if (error.toLowerCase().contains('email') && error.toLowerCase().contains('already')) {
+      return 'An account with this email already exists';
     } else if (error.toLowerCase().contains('network')) {
       return 'Network error. Please check your connection.';
     } else if (error.toLowerCase().contains('timeout')) {
@@ -49,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return error;
   }
 
-  Future<void> _handleLogin() async {
+  Future<void> _handleSignup() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
@@ -60,7 +56,8 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     try {
-      final result = await _userService.login(
+      final result = await _userService.register(
+        name: _nameController.text.trim(),
         email: _emailController.text.trim(),
         password: _passwordController.text,
       );
@@ -71,24 +68,13 @@ class _LoginScreenState extends State<LoginScreen> {
         });
 
         if (result['success']) {
-          // Use the _rememberMe field (this fixes the "unused field" warning)
-          if (_rememberMe) {
-            // Save user credentials for next time
-            // This could be implemented to store encrypted credentials
-            debugPrint('Remember me enabled - credentials could be saved');
-          }
-          
-          final userData = result['data'];
-          if (userData['profile_completed'] == true) {
-            Navigator.pushReplacementNamed(context, '/home');
-          } else {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const SkillsSelectionScreen(),
-              ),
-            );
-          }
+          // Navigate to skills selection screen after successful registration
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const SkillsSelectionScreen(),
+            ),
+          );
         } else {
           setState(() {
             _errorMessage = _getErrorMessage(result['error'].toString());
@@ -105,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  Future<void> _handleGoogleLogin() async {
+  Future<void> _handleGoogleSignup() async {
     setState(() {
       _isLoading = true;
       _errorMessage = null;
@@ -141,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (mounted) {
         setState(() {
           _isLoading = false;
-          _errorMessage = 'Google sign-in failed. Please try again.';
+          _errorMessage = 'Google sign-up failed. Please try again.';
         });
       }
     }
@@ -182,13 +168,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    // Back button
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.arrow_back),
+                          onPressed: () => Navigator.pop(context),
+                        ),
+                        const Spacer(),
+                      ],
+                    ),
+                    
                     // Logo
                     Image.asset('assets/logo.png', height: 60),
                     const SizedBox(height: 16),
                     
                     // Title
                     const Text(
-                      'EduMatch',
+                      'Create Account',
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
@@ -197,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      'Enter your credentials to access your account',
+                      'Join EduMatch to connect with study partners',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,
@@ -205,6 +202,37 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     const SizedBox(height: 32),
+                    
+                    // Name Field
+                    TextFormField(
+                      controller: _nameController,
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your name';
+                        }
+                        if (value.trim().length < 2) {
+                          return 'Name must be at least 2 characters';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Full Name',
+                        prefixIcon: const Icon(Icons.person_outline),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey.shade300),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Color(0xFF00A1DF), width: 2),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
                     
                     // Email Field
                     TextFormField(
@@ -242,11 +270,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     TextFormField(
                       controller: _passwordController,
                       obscureText: _obscurePassword,
-                      textInputAction: TextInputAction.done,
-                      onFieldSubmitted: (_) => _handleLogin(),
+                      textInputAction: TextInputAction.next,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
+                          return 'Please enter a password';
                         }
                         if (value.length < 6) {
                           return 'Password must be at least 6 characters';
@@ -281,13 +308,46 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 16),
                     
-                    // Remember Me & Forgot Password
-                    RememberAndForgot(
-                      onRememberMeChanged: (value) {
-                        setState(() {
-                          _rememberMe = value;
-                        });
+                    // Confirm Password Field
+                    TextFormField(
+                      controller: _confirmPasswordController,
+                      obscureText: _obscureConfirmPassword,
+                      textInputAction: TextInputAction.done,
+                      onFieldSubmitted: (_) => _handleSignup(),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please confirm your password';
+                        }
+                        if (value != _passwordController.text) {
+                          return 'Passwords do not match';
+                        }
+                        return null;
                       },
+                      decoration: InputDecoration(
+                        labelText: 'Confirm Password',
+                        prefixIcon: const Icon(Icons.lock_outline),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscureConfirmPassword = !_obscureConfirmPassword;
+                            });
+                          },
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey.shade300),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Color(0xFF00A1DF), width: 2),
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 24),
                     
@@ -319,7 +379,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     
-                    // Login Button
+                    // Sign Up Button
                     SizedBox(
                       width: double.infinity,
                       height: 50,
@@ -332,7 +392,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           elevation: _isLoading ? 0 : 2,
                         ),
-                        onPressed: _isLoading ? null : _handleLogin,
+                        onPressed: _isLoading ? null : _handleSignup,
                         child: _isLoading
                             ? const SizedBox(
                                 height: 20,
@@ -343,7 +403,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               )
                             : const Text(
-                                'Sign In',
+                                'Create Account',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -355,13 +415,59 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: 24),
                     
                     // Social Login
-                    SocialLoginRow(
-                      onGoogleLogin: _handleGoogleLogin,
+                    Column(
+                      children: [
+                        Row(
+                          children: const [
+                            Expanded(child: Divider()),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 8),
+                              child: Text("Or sign up with"),
+                            ),
+                            Expanded(child: Divider()),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            InkWell(
+                              onTap: _isLoading ? null : _handleGoogleSignup,
+                              borderRadius: BorderRadius.circular(22),
+                              child: Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.grey.shade200,
+                                  border: Border.all(color: Colors.grey.shade300),
+                                ),
+                                child: const Icon(
+                                  Icons.g_mobiledata,
+                                  color: Color(0xFF4285F4),
+                                  size: 24,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 20),
                     
-                    // Sign Up Prompt
-                    const SignupPrompt(),
+                    // Login Prompt
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Already have an account?"),
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text(
+                            "Sign In",
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),

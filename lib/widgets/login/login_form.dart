@@ -1,68 +1,66 @@
 import 'package:flutter/material.dart';
 
-class LoginForm extends StatefulWidget { // manage dynamic state
-  const LoginForm({super.key});
+class LoginForm extends StatefulWidget {
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+  final String? errorMessage;
+  
+  const LoginForm({
+    super.key,
+    required this.emailController,
+    required this.passwordController,
+    this.errorMessage,
+  });
 
-  //**
-  // The widget class (LoginForm) is immutable and defines the widget’s configuration.
-  // The _LoginFormState class is where the mutable state is managed.
-  // */
   @override
   State<LoginForm> createState() => _LoginFormState();
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
   bool _obscurePassword = true;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        // Email Field
         TextField(
-          controller: _emailController,
+          controller: widget.emailController,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             labelText: 'Email',
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: Colors.white, width: 1),
-              // Black border for the email field
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Colors.black, width: 1),
-            // This is the border when the field is enabled          
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Colors.black, width: 1.5),
-            // This is the border when the field is focused
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Colors.black, width: 1),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Colors.black, width: 1.5),
+            ),
           ),
         ),
-      ),
         const SizedBox(height: 16),
+        
+        // Password Field
         TextField(
-          controller: _passwordController,
+          controller: widget.passwordController,
           obscureText: _obscurePassword,
           decoration: InputDecoration(
             labelText: 'Password',
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: Colors.white, width: 1),
-              // Black border for the email field
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Colors.black, width: 1),
-            // This is the border when the field is enabled          
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Colors.black, width: 1.5),
-          ),
-            // This is the border when the field is focused
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Colors.black, width: 1),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Colors.black, width: 1.5),
+            ),
             suffixIcon: IconButton(
               icon: Icon(
                 _obscurePassword ? Icons.visibility_off : Icons.visibility,
@@ -75,6 +73,22 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
         ),
+        
+        // Error Message
+        if (widget.errorMessage != null) ...[
+          const SizedBox(height: 16),
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.red.shade100,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              widget.errorMessage!,
+              style: const TextStyle(color: Colors.red),
+            ),
+          ),
+        ],
       ],
     );
   }
