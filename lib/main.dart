@@ -6,7 +6,7 @@ import 'screens/chat_screen.dart';
 import 'screens/chat_detail_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/matches_screen.dart';
-import 'services/chat_service.dart';
+//import 'services/chat_service.dart';
 import 'models/user_match.dart';
 
 void main() {
