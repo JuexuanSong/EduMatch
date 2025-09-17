@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/login_screen.dart';
+import 'screens/signup_screen.dart';
 import 'screens/skills_selection_screen.dart';
 import 'screens/profile_setup_screen.dart';
 import 'screens/chat_screen.dart';
@@ -8,6 +9,8 @@ import 'screens/home_screen.dart';
 import 'screens/matches_screen.dart';
 //import 'services/chat_service.dart';
 import 'models/user_match.dart';
+import 'screens/forgot_password_screen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -38,6 +41,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login', // Set the initial route to '/login'
       routes: {
         '/login': (context) => const LoginScreen(),
+        '/signup': (context) => const SignupScreen(),
+        '/forgot-password': (context) => const ForgotPasswordScreen(),
         '/skills_selection': (context) => const SkillsSelectionScreen(),
         '/profile_setup': (context) => const ProfileSetupScreen(),
         '/chat': (context) =>  ChatScreen(chatService: MockChatService()),
@@ -46,7 +51,6 @@ class MyApp extends StatelessWidget {
           return ChatDetailScreen(user: args);
         },
         '/people': (context) => MatchesScreen(),
-        '/home': (context) => const HomeScreen(),
       },
     );
   }

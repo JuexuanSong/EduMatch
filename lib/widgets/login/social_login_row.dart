@@ -1,14 +1,37 @@
 import 'package:flutter/material.dart';
 
-/// This widget displays a row of social login icons
 class SocialLoginRow extends StatelessWidget {
-  const SocialLoginRow({super.key});
+  final VoidCallback? onGoogleLogin;
+  final VoidCallback? onFacebookLogin;
+  
+  const SocialLoginRow({
+    super.key,
+    this.onGoogleLogin,
+    this.onFacebookLogin,
+  });
 
-  Widget _buildIcon(IconData icon) {
-    return CircleAvatar(
-      radius: 22,
-      backgroundColor: Colors.grey.shade200,
-      child: Icon(icon, color: Colors.black),
+  Widget _buildSocialButton({
+    required IconData icon,
+    required String label,
+    required VoidCallback? onPressed,
+    required Color color,
+  }) {
+    return InkWell(
+      onTap: onPressed,
+      borderRadius: BorderRadius.circular(22),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.grey.shade200,
+          border: Border.all(color: Colors.grey.shade300),
+        ),
+        child: Icon(
+          icon,
+          color: color,
+          size: 24,
+        ),
+      ),
     );
   }
 
@@ -30,10 +53,12 @@ class SocialLoginRow extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            _buildIcon(Icons.g_mobiledata), // Google icon
-            _buildIcon(Icons.facebook), // Facebook icon
-            _buildIcon(Icons.apple), // Apple icon
-            _buildIcon(Icons.smartphone), // Phone icon
+            _buildSocialButton(
+              icon: Icons.g_mobiledata,
+              label: 'Google',
+              onPressed: onGoogleLogin,
+              color: const Color(0xFF4285F4),
+            ),
           ],
         ),
       ],

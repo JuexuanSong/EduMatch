@@ -6,6 +6,7 @@ import '../services/matches_service.dart';
 import '../models/user_match.dart';
 
 class MatchesScreen extends StatefulWidget {
+
   final int currentUserId;
 
   const MatchesScreen({Key? key, required this.currentUserId}) : super(key: key);
@@ -16,7 +17,6 @@ class MatchesScreen extends StatefulWidget {
 
 class _MatchesScreenState extends State<MatchesScreen> {
   late MatchEngine _matchEngine;
-  List<SwipeItem> _swipeItems = [];
   int _currentIndex = 1;
   final MatchesService _matchesService = MatchesService();
 
@@ -34,6 +34,7 @@ class _MatchesScreenState extends State<MatchesScreen> {
     'React': 'JavaScript library for building UIs.',
     'Speaking': 'Improving verbal communication skills.',
   };
+
 
   @override
   void initState() {
@@ -66,6 +67,7 @@ class _MatchesScreenState extends State<MatchesScreen> {
     } catch (e) {
       print("Error fetching matches: $e");
     }
+
   }
 
   void _onTabTapped(int index) {
