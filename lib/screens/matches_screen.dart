@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:swipe_cards/draggable_card.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import '../widgets/common/bottom_navigation_bar.dart';
+import '../services/matches_service.dart';
+import '../models/user_match.dart';
 
 class MatchesScreen extends StatefulWidget {
-  const MatchesScreen({super.key});
+
+  final int currentUserId;
+
+  const MatchesScreen({Key? key, required this.currentUserId}) : super(key: key);
 
   @override
   State<MatchesScreen> createState() => _MatchesScreenState();
@@ -13,6 +18,7 @@ class MatchesScreen extends StatefulWidget {
 class _MatchesScreenState extends State<MatchesScreen> {
   late MatchEngine _matchEngine;
   int _currentIndex = 1;
+  final MatchesService _matchesService = MatchesService();
 
   final Map<String, String> skillDescriptions = {
     'Photoshop': 'Image editing and graphic design tool.',
@@ -29,60 +35,44 @@ class _MatchesScreenState extends State<MatchesScreen> {
     'Speaking': 'Improving verbal communication skills.',
   };
 
-  final List<Map<String, dynamic>> profiles = [
-    {
-      'name': 'Alice',
-      'bio': 'Love biology and design!',
-      'image': 'assets/profilePics/profile1.jpg',
-      'canTeach': ['Photoshop', 'Biology', 'Flutter'],
-      'wannaLearn': ['Java', '3D Modeling', 'Math']
-    },
-    {
-      'name': 'Bob',
-      'bio': 'Data nerd, code lover.',
-      'image': 'assets/profilePics/profile2.jpg',
-      'canTeach': ['Python', 'Excel', 'Data Analysis'],
-      'wannaLearn': ['UI/UX', 'React', 'Speaking']
-    },
-  ];
-
-  final List<SwipeItem> _swipeItems = [
-    SwipeItem(
-      content: {
-        'name': 'Alice',
-        'bio': 'Love biology and design!',
-        'image': 'assets/profilePics/profile1.jpg',
-        'canTeach': ['Photoshop', 'Biology', 'Flutter'],
-        'wannaLearn': ['Java', '3D Modeling', 'Math']
-      },
-      likeAction: () async => Future.value(),
-      nopeAction: () async => Future.value(),
-      superlikeAction: () async => Future.value(),
-      onSlideUpdate: (SlideRegion? region) async => null,
-    ),
-    SwipeItem(
-      content: {
-        'name': 'Bob',
-        'bio': 'Data nerd, code lover.',
-        'image': 'assets/profilePics/profile2.jpg',
-        'canTeach': ['Python', 'Excel', 'Data Analysis'],
-        'wannaLearn': ['UI/UX', 'React', 'Speaking']
-      },
-      likeAction: () async => Future.value(),
-      nopeAction: () async => Future.value(),
-      superlikeAction: () async => Future.value(),
-      onSlideUpdate: (SlideRegion? region) async => null,
-    ),
-  ];
 
   @override
   void initState() {
     super.initState();
-    _matchEngine = MatchEngine(swipeItems: _swipeItems);
+    _loadMatches();
+  }
+
+  void _loadMatches() async {
+    try {
+      List<Match> matches = await _matchesService.fetchMatches(widget.currentUserId);
+
+      for (var m in matches) {
+        // Show the "other" user
+        UserProfile profile = m.user1.id == widget.currentUserId ? m.user2 : m.user1;
+
+        _swipeItems.add(
+          SwipeItem(
+            content: profile,
+            likeAction: () async => Future.value(),
+            nopeAction: () async => Future.value(),
+            superlikeAction: () async => Future.value(),
+            onSlideUpdate: (region) async => null,
+          ),
+        );
+      }
+
+      setState(() {
+        _matchEngine = MatchEngine(swipeItems: _swipeItems);
+      });
+    } catch (e) {
+      print("Error fetching matches: $e");
+    }
+
   }
 
   void _onTabTapped(int index) {
     if (index == _currentIndex) return;
+
     setState(() => _currentIndex = index);
 
     if (index == 0) {
@@ -123,6 +113,12 @@ class _MatchesScreenState extends State<MatchesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_swipeItems.isEmpty) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -138,7 +134,8 @@ class _MatchesScreenState extends State<MatchesScreen> {
             child: SwipeCards(
               matchEngine: _matchEngine,
               itemBuilder: (BuildContext context, int index) {
-                final profile = _swipeItems[index].content;
+                final profile = _swipeItems[index].content as UserProfile;
+
                 return Card(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   elevation: 8,
@@ -149,40 +146,28 @@ class _MatchesScreenState extends State<MatchesScreen> {
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(16),
-                            child: AspectRatio(
-                              aspectRatio: 1,
-                              child: Image.asset(
-                                profile['image'],
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                            child: profile.imageUrl.isNotEmpty
+                                ? Image.network(profile.imageUrl, fit: BoxFit.cover)
+                                : Image.asset('assets/images/default_profile.png', fit: BoxFit.cover),
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            profile['name'],
+                            profile.username,
                             style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(height: 8),
-                          Text(profile['bio'], textAlign: TextAlign.center),
+                          Text(profile.bio, textAlign: TextAlign.center),
                           const SizedBox(height: 16),
                           const Text('I can teach', style: TextStyle(fontWeight: FontWeight.bold)),
                           Wrap(
                             spacing: 6,
-                            children: List<Widget>.from(
-                              profile['canTeach'].map<Widget>(
-                                    (s) => _buildSkillChip(s, Colors.blue.shade100),
-                              ),
-                            ),
+                            children: profile.canTeach.map((s) => _buildSkillChip(s, Colors.blue.shade100)).toList(),
                           ),
                           const SizedBox(height: 10),
                           const Text('I want to learn', style: TextStyle(fontWeight: FontWeight.bold)),
                           Wrap(
                             spacing: 6,
-                            children: List<Widget>.from(
-                              profile['wannaLearn'].map<Widget>(
-                                    (s) => _buildSkillChip(s, Colors.green.shade100),
-                              ),
-                            ),
+                            children: profile.wannaLearn.map((s) => _buildSkillChip(s, Colors.green.shade100)).toList(),
                           ),
                         ],
                       ),
